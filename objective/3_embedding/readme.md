@@ -45,5 +45,7 @@ def get_input_and_pe(x, params):
     wpe_out = F.embedding( input = pos_input, 
                           weight= params["wpe.weight"] )
     print( wpe_out.shape )
-    return wte_out, wpe_out
+
+    embedding_out = wte_out + wpe_out
+    return embedding_out
 ```
