@@ -74,7 +74,7 @@ def read_safetensor(path):
     print( type(x) ) # <class 'list'>
     # print( x[0] ) # ("tensor_name", "actual_data_byte_format")
 
-    weight_map = dict()
+    params = dict()
     for safetensor in x:
         name = safetensor[0]
         shape = safetensor[1]["shape"]
@@ -85,10 +85,10 @@ def read_safetensor(path):
         tensor = torch.frombuffer(buffer=data, dtype=torch.float32)
         # returns 1D tensor
         tensor = tensor.reshape(shape)
-        print( name, shape, tensor.shape, dtype )
+        # print( name, shape, tensor.shape, dtype )
 
-        weight_map[name] = tensor
-        return weight_map
+        params[name] = tensor
+    return params
 ```
 
 Intermediate output of `print( name, shape, tensor.shape, dtype )`, makes it clear, we read the data correctly.
