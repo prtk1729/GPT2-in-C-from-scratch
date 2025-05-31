@@ -65,7 +65,7 @@ def get_input_and_pe(x, params):
     wte_out = F.embedding( input=x, \
                            weight = params["wte.weight"],
                             )
-    # print( wte_out.shape ) # torch.Size([64, 768])
+    print( "wte_out Shape: ", wte_out.shape ) # torch.Size([64, 768])
 
 
     # positional encoding -> wpe.weight is frozen repr of positions from [0, 1023]
@@ -77,7 +77,8 @@ def get_input_and_pe(x, params):
     # (seq_len) -> Get pos_embs for each  of these input tokens search in emb_dict
     wpe_out = F.embedding( input = pos_input, 
                           weight= params["wpe.weight"] )
-    # print( wpe_out.shape )
+    print( "wpe_out Shape: ", wpe_out.shape ) # torch.Size([64, 768])
+
 
     embedding_out = wte_out + wpe_out
     return embedding_out
@@ -250,6 +251,7 @@ def get_loss(params, encoder_out, y_true):
     # [seq_id = 0] => [ x1 x2 .... x50256 ] => xi's are logits, max logit value is pred
     y_pred = F.linear( input= ln_f_out, 
               weight = params["wte.weight"] )
+    print( "y_pred Shape: ", y_pred.shape ) # torch.Size([64, 768])
 
     loss = F.cross_entropy( y_pred, y_true )
     return loss, y_pred
